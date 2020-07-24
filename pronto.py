@@ -1,4 +1,4 @@
-#   !/usr/bin/python
+#   !/usr/bin/env python
 #   coding: utf-8
 
 #   Calculo Numerico (SME0602) - Projeto Pratico 2
@@ -6,7 +6,8 @@
 #
 #   Para rodar (no terminal linux): python3 main.py
 
-
+from matplotlib import pyplot as plt
+import numpy as np
 
 # Function to find the product term 
 def proterm(i, value, x): 
@@ -40,14 +41,14 @@ def printDiffTable(y, n):
 		print("")
 
 def y_x(x):
-    return 1 / (1 + 25*pow(x,2))
+    return 1 / (1 + 25*x*x)
 
 def main():
     # number of inputs given 
-    k = 10
+    k = 100
     x = [0 for i in range(k)]
     # y[][] is used for divided difference table where y[][0] is used for input 
-    fx = [[0 for i in range(10)] for j in range(10)]
+    fx = [[0 for i in range(k)] for j in range(k)]
 
     for i in range(k):
         x[i] = -1 + 2*i/k
@@ -57,17 +58,22 @@ def main():
     fx=dividedDiffTable(x, fx, k)
 
     # displaying divided difference table 
-    print("*********** Tabela de Newton Dai ***********")
-    printDiffTable(fx, k)
-    print("\n")
+    #print("*********** Tabela de Newton Dai ***********")
+    #printDiffTable(fx, k)
+    #print("\n")
+
 
     print("*********** Vetor de ek's ***********")
-    ek = [0 for i in range(k)]
+    pk = []
+    ek = []
     x_max = -1
     e_max = 0
     for i in range(k):
+        print(i)
         x_aux = -1 + 2*i/k
-        ek[i] = abs(y_x(x_aux)-applyFormula(x_aux, x, fx, k))
+        print(y_x(x_aux))
+        print(applyFormula(x_aux, x, fx, k))
+        ek.append(abs(y_x(x_aux)-applyFormula(x_aux, x, fx, k)))
         
         if ek[i] > e_max:
             x_max = x_aux
@@ -79,14 +85,22 @@ def main():
     print("e_maximo: " + str(e_max))
 
 
-    # value to be interpolated 
-    #value = -1
+    # ************** Plot grafico fx
+    fig = plt.figure(1)
+    t = np.arange(-1, 1, 2/k)
+    f_plot = y_x(t)
+    fig1, ax = plt.subplots()
+    ax.plot(t, f_plot, 'b')
+    ax.grid()
 
-    # printing the value 
-    #print("\nValue at", value, "is", round(applyFormula(value, x, fx, k), 2)) 
-    #print("\nValue a mao", value, "is", round(1 / (1 + 25*pow(value,2)), 2)) 
+    fig = plt.figure(2)
+    t2 = np.arange(0, k, 1)
+    fig2, ax = plt.subplots()
+    ax.set_yscale('log')
+    ax.plot(t2, ek, 'r')
+    fig2.savefig("test.png")
 
-    # This code is contributed by mits 
+    plt.show()
 
 if __name__ == "__main__":
         main()
