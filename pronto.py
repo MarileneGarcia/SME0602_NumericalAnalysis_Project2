@@ -61,6 +61,7 @@ def main():
     printDiffTable(fx, k)
     print("\n")
 
+    print("*********** Vetor de ek's ***********")
     ek = [0 for i in range(k)]
     x_max = -1
     e_max = 0
@@ -72,11 +73,8 @@ def main():
             x_max = x_aux
             e_max = ek[i]
 
-    print("*********** Vetor de ek's ***********")
     print(ek)
-    print("\n")
 
-    print("*********** Maximo ***********")
     print("x_maximo: " + str(x_max))
     print("e_maximo: " + str(e_max))
 
