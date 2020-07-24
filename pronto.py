@@ -7,6 +7,7 @@
 #   Para rodar (no terminal linux): python3 main.py
 
 
+
 # Function to find the product term 
 def proterm(i, value, x): 
     pro = 1
@@ -38,8 +39,8 @@ def printDiffTable(y, n):
 
 		print("")
 
-def func():
-    
+def y_x(x):
+    return 1 / (1 + 25*pow(x,2))
 
 def main():
     # number of inputs given 
@@ -50,26 +51,41 @@ def main():
 
     for i in range(k):
         x[i] = -1 + 2*i/k
-        fx[i][0] = 1 / (1 + 25*pow(x[i],2))
+        fx[i][0] = y_x(x[i])
 
     # calculating divided difference table 
     fx=dividedDiffTable(x, fx, k)
 
     # displaying divided difference table 
+    print("*********** Tabela de Newton Dai ***********")
     printDiffTable(fx, k)
+    print("\n")
 
     ek = [0 for i in range(k)]
-    x_aux = 
+    x_max = -1
+    e_max = 0
     for i in range(k):
-        for j in range(-1, 1, 0.1):
-            fx_aux = 1 / (1 + 25*pow(x[i],2)
+        x_aux = -1 + 2*i/k
+        ek[i] = abs(y_x(x_aux)-applyFormula(x_aux, x, fx, k))
+        
+        if ek[i] > e_max:
+            x_max = x_aux
+            e_max = ek[i]
 
-        ek[i] = abs()
+    print("*********** Vetor de ek's ***********")
+    print(ek)
+    print("\n")
+
+    print("*********** Maximo ***********")
+    print("x_maximo: " + str(x_max))
+    print("e_maximo: " + str(e_max))
+
+
     # value to be interpolated 
-    value = -1
+    #value = -1
 
     # printing the value 
-    print("\nValue at", value, "is", round(applyFormula(value, x, fx, k), 2)) 
+    #print("\nValue at", value, "is", round(applyFormula(value, x, fx, k), 2)) 
     #print("\nValue a mao", value, "is", round(1 / (1 + 25*pow(value,2)), 2)) 
 
     # This code is contributed by mits 
