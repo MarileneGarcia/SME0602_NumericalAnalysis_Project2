@@ -69,38 +69,42 @@ def main():
     x_max = -1
     e_max = 0
     for i in range(k):
-        print(i)
+        #print(i)
         x_aux = -1 + 2*i/k
-        print(y_x(x_aux))
-        print(applyFormula(x_aux, x, fx, k))
+        #print(y_x(x_aux))
+        #print(applyFormula(x_aux, x, fx, k))
         ek.append(abs(y_x(x_aux)-applyFormula(x_aux, x, fx, k)))
         
         if ek[i] > e_max:
             x_max = x_aux
             e_max = ek[i]
 
-    print(ek)
+    #print(ek)
 
     print("x_maximo: " + str(x_max))
     print("e_maximo: " + str(e_max))
 
 
     # ************** Plot grafico fx
-    fig = plt.figure(1)
+    #fig = plt.figure(1)
     t = np.arange(-1, 1, 2/k)
     f_plot = y_x(t)
     fig1, ax = plt.subplots()
     ax.plot(t, f_plot, 'b')
     ax.grid()
+    fig1.savefig("px.png")
 
-    fig = plt.figure(2)
+    #fig = plt.figure(2)
     t2 = np.arange(0, k, 1)
     fig2, ax = plt.subplots()
     ax.set_yscale('log')
     ax.plot(t2, ek, 'r')
-    fig2.savefig("test.png")
+    fig2.savefig("erro.png")
 
     plt.show()
+
+    plt.close(fig1)
+    plt.close(fig2)
 
 if __name__ == "__main__":
         main()
